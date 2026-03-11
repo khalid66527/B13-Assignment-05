@@ -55,6 +55,54 @@ const loadLessons = () =>{
     .then((data) =>displayLesson(data.data))
 }
 
+const loadDetail= async(id) => {
+    const url=`https://phi-lab-server.vercel.app/api/v1/lab/issue/${id}`;
+    const res = await fetch(url);
+    const details = await res .json();
+    displayDetails(details.data)
+}
+
+const displayDetails = (word) =>{
+    console.log(word);
+    const modalContainer = document.getElementById("modal-container");
+    modalContainer.innerHTML  = `
+
+            <div class=" p-5 space-y-5">
+                <div class="">
+                    <h2 class="font-bold text-2xl">${word.title}</h2>
+                    <div class=" flex gap-2 items-center">
+                        <span class="bg-green-700 p-2 rounded-2xl text-white">${word.status}</span>
+                        <span>Opened by </span>
+                        <span class="font-bold">#${word.author}</span>
+                        <span>${new Date(word.updatedAt).toLocaleDateString()}</span>
+                    </div>
+                </div>
+                <div class="flex gap-3 flex-wrap">
+                    <div class="flex gap-3 flex-wrap">${createElements(word.labels)}</div>
+
+                </div>
+                <p class="text-gray-500">${word.description}</p>
+                <div class=" bg-gray-100 flex justify-between">
+                    <div class="">
+                        <p class="text-gray-500">Assignee:</p>
+                        <p class="fint-bold"># ${word.author}</p>
+                    </div>
+                    <div class="">
+                        <p class="text-gray-500">Priority:</p>
+                        <button class="btn bg-red-600 text-white rounded-2xl border px-4 py-1">
+                        ${word.priority}
+                        </button>
+                    </div>
+                </div>
+            
+            </div>
+    
+    
+    `;
+     document.getElementById("my_modal").showModal();
+
+}
+
 
 const displayLesson = (lessons) => {
     const levelContainer = document.getElementById("level-container");
@@ -80,7 +128,7 @@ const displayLesson = (lessons) => {
         
         // 2. Ekhane dynamic class gulo bosiye dao
         cardDiv.innerHTML = `
-            <div onclick="my_modal_5.showModal()" class="bg-white space-y-7 p-5 rounded-xl shadow-lg border-t-[5px] ${dynamicBorder} h-full">
+            <div onclick="loadDetail(${lesson.id})" class="bg-white space-y-7 p-5 rounded-xl shadow-lg border-t-[5px] ${dynamicBorder} h-full">
                 <div class="flex justify-between">
                     <img class="w-8 h-8" src="./assets/Open-Status.png" alt="">
                     <button class="btn rounded-2xl border ${dynamicColor} px-4 py-1">
