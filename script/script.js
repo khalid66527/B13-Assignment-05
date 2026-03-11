@@ -35,6 +35,20 @@ const createElements = (arr) => {
     });
     return htmlElements.join(" ");
 };
+// "id": 1,
+// "title": "Fix navigation menu on mobile devices",
+// "description": "The navigation menu doesn't collapse properly on mobile devices. Need to fix the responsive behavior.",
+// "status": "open",
+// "labels": [
+// "bug",
+// "help wanted"
+// ],
+// "priority": "high",
+// "author": "john_doe",
+// "assignee": "jane_smith",
+// "createdAt": "2024-01-15T10:30:00Z",
+// "updatedAt": "2024-01-15T10:30:00Z"
+
 const loadLessons = () =>{
     fetch("https://phi-lab-server.vercel.app/api/v1/lab/issues")
     .then((res) => res.json())
@@ -42,35 +56,51 @@ const loadLessons = () =>{
 }
 
 
-const displayLesson = (lessons)=>{
+const displayLesson = (lessons) => {
     const levelContainer = document.getElementById("level-container");
     levelContainer.innerHTML = "";
 
     lessons.forEach(lesson => {
-        console.log(lesson);
+        // 1. Loop er bhetorei priority check kore color thik koro
+        let dynamicColor = "";
+        let dynamicBorder = "";
+
+        if (lesson.status === "open") {
+            dynamicColor = "border-red-500 text-red-600";
+            dynamicBorder = "border-green-500";
+        } else if (lesson.status === "Closed") {
+            dynamicColor = "border-yellow-500 text-yellow-600";
+            dynamicBorder = "border-purple-500";
+        } else {
+            dynamicColor = "border-gray-500 text-gray-600";
+            dynamicBorder = "border-purple-500";
+        }
+
         const cardDiv = document.createElement("div");
-        cardDiv.innerHTML=`
-            <div class="bg-white  space-y-7 p-5 rounded-xl shadow-lg border-t-6 h-full">
-                <div class=" flex justify-between">
-                <img class="w-8 h-8" src="./assets/Open-Status.png" alt="">
-                <button class="btn rounded-2xl">${lesson.priority}</button>
+        
+        // 2. Ekhane dynamic class gulo bosiye dao
+        cardDiv.innerHTML = `
+            <div onclick="my_modal_5.showModal()" class="bg-white space-y-7 p-5 rounded-xl shadow-lg border-t-[5px] ${dynamicBorder} h-full">
+                <div class="flex justify-between">
+                    <img class="w-8 h-8" src="./assets/Open-Status.png" alt="">
+                    <button class="btn rounded-2xl border ${dynamicColor} px-4 py-1">
+                        ${lesson.priority}
+                    </button>
                 </div>
-                <div class="">
+                <div>
                     <h2 class="font-bold text-xl">${lesson.title}</h2>
                     <p class="text-gray-500">${lesson.description}</p>
                 </div>
-                <div class=" flex gap-3">${createElements(lesson.labels)}</div>
-                <hr class="opacity-[30%] ">
-                <div class=" flex justify-between">
+                <div class="flex gap-3 flex-wrap">${createElements(lesson.labels)}</div>
+                <hr class="opacity-[30%]">
+                <div class="flex justify-between items-center">
                     <span class="font-bold"># ${lesson.author}</span>
-                    <span class="text-gray-500">${lesson.updatedAt}</span>
+                    <span class="text-gray-500 text-sm">${new Date(lesson.updatedAt).toLocaleDateString()}</span>
                 </div>
             </div>
-           
         `;
 
-        levelContainer.append(cardDiv)
-    }
-
-)}
+        levelContainer.append(cardDiv);
+    });
+};
 loadLessons();
