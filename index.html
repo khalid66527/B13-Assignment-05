@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Assignment-05</title>
+
+    <!-- styleshit -->
+     <link rel="stylesheet" href="./style/style.css">
+
+    <!-- daisu ui -->
+     <link href="https://cdn.jsdelivr.net/npm/daisyui@5" rel="stylesheet" type="text/css" />
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+
+    <!-- fonts -->
+     <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&display=swap"
+    rel="stylesheet">
+</head>
+<body >
+    <section >
+        <div class="bg-gray-100 min-h-screen flex items-center justify-center">
+            <div class="login-page r w-[512px] mx-auto bg-white shadow-lg my-20 p-10 space-y-6">
+            <div class="text-center space-y-2">
+                <img class="mx-auto" src="./assets/github-logo.png" alt="">
+                <h2 class="font-bold text-2xl">GitHub Issues Tracker</h2>
+                <p class="text-gray-500">Sign in to manage your issues</p>
+            </div>
+            <div class=" space-y-3">
+                <label class="font-medium text-xl" for="">Username</label><br>
+                <input id="user-input" class="text-gray-500 p-2 w-full rounded-lg" type="text"
+                placeholder="Enter Username">
+                <p class="text-[#4A00FF]">Default: admin</p>
+                <label class="font-medium text-xl " for="">Password</label> <br>
+                <input id="user-pass" class="text-gray-500 p-2 w-full rounded-lg" type="password"
+                placeholder="Enter Password">
+                <p class="text-[#4A00FF]">Default: admin123</p>
+                <button id="btn-login" class="btn btn-primary w-full">Sign In</button>
+            </div>
+            <fieldset class="border-t border-gray-300">
+                <legend class="mx-auto px-4 text-gray-800 text-sm">OR</legend>
+                
+                <div class="text-center text-gray-500"><p>Demo Credentials:</p></div>
+            </fieldset>
+            <div class=" text-center bg-gray-100 py-3">
+                <p class="font-bold">Username:<span class="font-normal"> admin</span></p>
+                <p class="font-bold">Password:<span class="font-normal"> admin123</span></p>
+            </div>
+        </div>
+        </div>
+    </section>
+
+    <script src="./script/login.js"></script>
+    <script src="./script/script.js"></script>
+</body>
+</html>
