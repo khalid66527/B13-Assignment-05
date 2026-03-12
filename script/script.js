@@ -1,4 +1,5 @@
 
+
 const createElements = (arr) => {
     const htmlElements = arr.map((el) => {
         let color = "";
@@ -36,6 +37,8 @@ const createElements = (arr) => {
     return htmlElements.join(" ");
 };
 
+
+
 const spinnerController = (status)=>{
     if(status == true){
         document.getElementById("spinner").classList.remove("hidden");
@@ -56,6 +59,7 @@ const loadDetail= async(id) => {
 }
 
 
+
 const displayDetails = (word) =>{
     console.log(word);
     let modalpriorityBtnColor = "";
@@ -68,6 +72,7 @@ const displayDetails = (word) =>{
     }
      
   
+
 
     const modalContainer = document.getElementById("modal-container");
     modalContainer.innerHTML  = `
@@ -109,6 +114,8 @@ const displayDetails = (word) =>{
      spinnerController(false);
 
 }
+
+
 // "id": 1,
 // "title": "Fix navigation menu on mobile devices",
 // "description": "The navigation menu doesn't collapse properly on mobile devices. Need to fix the responsive behavior.",
