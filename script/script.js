@@ -12,7 +12,7 @@ const createElements = (arr) => {
             color = "bg-yellow-100 text-yellow-600";
         }
         else if(el === "enhancement"){
-            icon = '<i class="fa-solid fa-wand-magic-sparkles"></i>';
+            icon = '<i class="fa-solid fa-seedling"></i>';
             color = "bg-green-100 text-green-600";
         }
         else if(el === "good first issue"){
@@ -35,19 +35,6 @@ const createElements = (arr) => {
     });
     return htmlElements.join(" ");
 };
-// "id": 1,
-// "title": "Fix navigation menu on mobile devices",
-// "description": "The navigation menu doesn't collapse properly on mobile devices. Need to fix the responsive behavior.",
-// "status": "open",
-// "labels": [
-// "bug",
-// "help wanted"
-// ],
-// "priority": "high",
-// "author": "john_doe",
-// "assignee": "jane_smith",
-// "createdAt": "2024-01-15T10:30:00Z",
-// "updatedAt": "2024-01-15T10:30:00Z"
 
 const loadLessons = () =>{
     fetch("https://phi-lab-server.vercel.app/api/v1/lab/issues")
@@ -102,6 +89,19 @@ const displayDetails = (word) =>{
      document.getElementById("my_modal").showModal();
 
 }
+// "id": 1,
+// "title": "Fix navigation menu on mobile devices",
+// "description": "The navigation menu doesn't collapse properly on mobile devices. Need to fix the responsive behavior.",
+// "status": "open",
+// "labels": [
+// "bug",
+// "help wanted"
+// ],
+// "priority": "high",
+// "author": "john_doe",
+// "assignee": "jane_smith",
+// "createdAt": "2024-01-15T10:30:00Z",
+// "updatedAt": "2024-01-15T10:30:00Z"
 
 
 const displayLesson = (lessons) => {
@@ -109,20 +109,22 @@ const displayLesson = (lessons) => {
     levelContainer.innerHTML = "";
 
     lessons.forEach(lesson => {
-        // 1. Loop er bhetorei priority check kore color thik koro
-        let dynamicColor = "";
-        let dynamicBorder = "";
-
+     
+         // 1:  Border Color 
         if (lesson.status === "open") {
-            dynamicColor = "border-red-500 text-red-600";
             dynamicBorder = "border-green-500";
-        } else if (lesson.status === "Closed") {
-            dynamicColor = "border-yellow-500 text-yellow-600";
-            dynamicBorder = "border-purple-500";
         } else {
-            dynamicColor = "border-gray-500 text-gray-600";
-            dynamicBorder = "border-purple-500";
+            dynamicBorder = "border-purple-500"; // Typo fix: purple
         }
+        // Part 2: Priority onujayi Button Color
+        if (lesson.priority === "high") {
+            dynamicColor = "border-red-500 text-red-600 bg-red-100";
+        } else if (lesson.priority === "medium") {
+            dynamicColor = "border-yellow-500 text-yellow-600 bg-yellow-100";
+        } else {
+            dynamicColor = "border-gray-500 text-gra-600 bg-gray-200";
+        }
+
 
         const cardDiv = document.createElement("div");
         
