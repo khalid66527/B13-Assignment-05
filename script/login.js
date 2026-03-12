@@ -18,7 +18,7 @@ document.getElementById('btn-login')
 
         if(uservalue=== "admin" && userPassValue === "admin123"){
             alert('login Success');
-            window.location.assign("../homepage.html")
+            window.location.assign('./homepage.html')
         }
         return;
         
