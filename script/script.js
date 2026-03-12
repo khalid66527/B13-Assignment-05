@@ -36,14 +36,18 @@ const createElements = (arr) => {
     return htmlElements.join(" ");
 };
 
-
-
-const loadDetail= async(id) => {
-    const url=`https://phi-lab-server.vercel.app/api/v1/lab/issue/${id}`;
-    const res = await fetch(url);
-    const details = await res .json();
-    displayDetails(details.data)
+const spinnerController = (status)=>{
+    if(status == true){
+        document.getElementById("spinner").classList.remove("hidden");
+        document.getElementById("level-container").classList.add("hidden");
+    }
+    else{
+        document.getElementById("level-container").classList.remove("hidden");
+        document.getElementById("spinner").classList.add("hidden");
+    }
 }
+
+
 
 const displayDetails = (word) =>{
     console.log(word);
@@ -83,6 +87,7 @@ const displayDetails = (word) =>{
     
     `;
      document.getElementById("my_modal").showModal();
+     spinnerController(false);
 
 }
 // "id": 1,
@@ -100,8 +105,8 @@ const displayDetails = (word) =>{
 // "updatedAt": "2024-01-15T10:30:00Z"
 
 
-
 const filterIssues = (status) => {
+    spinnerController(true);
     const buttons = document.querySelectorAll('.filter-btn');
     buttons.forEach(btn => btn.classList.remove('btn-primary'));
     
@@ -131,6 +136,14 @@ const filterIssues = (status) => {
 }
 
 
+const loadDetail= async(id) => {
+    spinnerController(true);
+    const url=`https://phi-lab-server.vercel.app/api/v1/lab/issue/${id}`;
+    const res = await fetch(url);
+    const details = await res .json();
+    displayDetails(details.data)
+}
+
 const loadLessons = () =>{
     fetch("https://phi-lab-server.vercel.app/api/v1/lab/issues")
     .then((res) => res.json())
@@ -140,6 +153,7 @@ const loadLessons = () =>{
 
 
 const displayLesson = (lessons) => {
+    
     const levelContainer = document.getElementById("level-container");
     levelContainer.innerHTML = "";
 
@@ -189,6 +203,7 @@ const displayLesson = (lessons) => {
 
         levelContainer.append(cardDiv);
     });
+    spinnerController(false);
 };
 loadLessons();
 
