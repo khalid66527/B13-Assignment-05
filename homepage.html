@@ -50,11 +50,11 @@
                             <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"></path>
                             </g>
                         </svg>
-                        <input type="text" placeholder="Search issues..." required />
+                        <input id="search-input" type="text" placeholder="Search issues..." required />
                         </label>
                         
                     </div>
-                    <button class="btn btn-primary join-item">
+                    <button id="search-btn" class="btn btn-primary join-item">
                         <i class="fa-solid fa-plus"></i>New Issue
                     </button>
                     </div>
@@ -63,14 +63,19 @@
        </header>
     </section>
 
+
+
     <!-- button section  -->
     <section>
-        <div class=" bg-white w-9/12 justify-center mx-auto p-6 gap-3 m-8 rounded-lg">
-            <button class="btn btn-primary w-25">All</button>
-            <button class="btn w-25">Open</button>
-            <button class="btn w-25 ">Closed</button>
+        <div class="bg-white w-9/12 flex  mx-auto p-6 gap-3 m-8 rounded-lg">
+            <button id="btn-all" onclick="filterIssues('all')" class="btn btn-primary filter-btn">All</button>
+            <button id="btn-open" onclick="filterIssues('open')" class="btn filter-btn">Open</button>
+            <button id="btn-closed" onclick="filterIssues('closed')" class="btn filter-btn">Closed</button>
         </div>
     </section>
+
+
+
     <!-- count section  -->
     <section>
         <div class="bg-white w-9/12 justify-center mx-auto p-6 gap-2 rounded-lg">
@@ -94,12 +99,10 @@
     <!-- card section  -->
 
     <section>
-        
-<!--  -->
-    </section>
         <div id="level-container" class="w-9/12  mx-auto p-6 gap-2 m-10 grid grid-flow-row md:grid-cols-3 ">
             
         </div>
+    </section>
 
         <!-- modal section  -->
          <section>

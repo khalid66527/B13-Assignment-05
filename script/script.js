@@ -110,6 +110,8 @@ const displayLesson = (lessons) => {
 
     lessons.forEach(lesson => {
      
+        let dynamicBorder = ""; // let add koro
+        let dynamicColor = "";  // let add koro
          // 1:  Border Color 
         if (lesson.status === "open") {
             dynamicBorder = "border-green-500";
@@ -154,3 +156,23 @@ const displayLesson = (lessons) => {
     });
 };
 loadLessons();
+
+document.getElementById("search-btn").addEventListener("click",() =>{
+    const input = document.getElementById("search-input");
+    const searchValue = input.value.trim().toLowerCase() ;
+    console.log(searchValue);
+
+    fetch("https://phi-lab-server.vercel.app/api/v1/lab/issues")
+    .then((res) => res.json())
+    .then((data) =>{
+        const allwords  = data.data;
+        console.log(allwords);
+        const filterwords = allwords.filter((word) => word.title.toLowerCase().includes(searchValue)
+
+
+        )
+        displayLesson(filterwords)
+
+    })
+})
+
