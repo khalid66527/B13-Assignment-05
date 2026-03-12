@@ -36,11 +36,7 @@ const createElements = (arr) => {
     return htmlElements.join(" ");
 };
 
-const loadLessons = () =>{
-    fetch("https://phi-lab-server.vercel.app/api/v1/lab/issues")
-    .then((res) => res.json())
-    .then((data) =>displayLesson(data.data))
-}
+
 
 const loadDetail= async(id) => {
     const url=`https://phi-lab-server.vercel.app/api/v1/lab/issue/${id}`;
@@ -104,21 +100,60 @@ const displayDetails = (word) =>{
 // "updatedAt": "2024-01-15T10:30:00Z"
 
 
+
+const filterIssues = (status) => {
+    const buttons = document.querySelectorAll('.filter-btn');
+    buttons.forEach(btn => btn.classList.remove('btn-primary'));
+    
+    const activeBtn = document.getElementById(`btn-${status}`);
+    if (activeBtn) {
+        activeBtn.classList.add('btn-primary');
+    }
+    fetch("https://phi-lab-server.vercel.app/api/v1/lab/issues")
+    .then((res) => res.json())
+    .then((data) => {
+        const allIssues = data.data;
+        let filterwords;
+        if (status === "all") {
+            filterwords = allIssues;
+        } 
+        else if (status === "open") {
+            filterwords = allIssues.filter(word => word.status.toLowerCase() === "open");
+        } 
+        else if (status === "closed") {
+            filterwords = allIssues.filter(word => word.status.toLowerCase() === "closed");
+        } 
+        else {
+            filterwords = allIssues;
+        }
+        displayLesson(filterwords);
+    })
+}
+
+
+const loadLessons = () =>{
+    fetch("https://phi-lab-server.vercel.app/api/v1/lab/issues")
+    .then((res) => res.json())
+    .then((data) =>displayLesson(data.data))
+}
+
+
+
 const displayLesson = (lessons) => {
     const levelContainer = document.getElementById("level-container");
     levelContainer.innerHTML = "";
 
     lessons.forEach(lesson => {
      
-        let dynamicBorder = ""; // let add koro
-        let dynamicColor = "";  // let add koro
-         // 1:  Border Color 
+        let dynamicBorder = ""; 
+        let dynamicColor = ""; 
+        
         if (lesson.status === "open") {
             dynamicBorder = "border-green-500";
         } else {
-            dynamicBorder = "border-purple-500"; // Typo fix: purple
+            dynamicBorder = "border-purple-500";
         }
-        // Part 2: Priority onujayi Button Color
+        //  Priority onujayi Button Color
         if (lesson.priority === "high") {
             dynamicColor = "border-red-500 text-red-600 bg-red-100";
         } else if (lesson.priority === "medium") {
@@ -130,7 +165,7 @@ const displayLesson = (lessons) => {
 
         const cardDiv = document.createElement("div");
         
-        // 2. Ekhane dynamic class gulo bosiye dao
+        //  Ekhane dynamic class gulo bosiye dao
         cardDiv.innerHTML = `
             <div onclick="loadDetail(${lesson.id})" class="bg-white space-y-7 p-5 rounded-xl shadow-lg border-t-[5px] ${dynamicBorder} h-full">
                 <div class="flex justify-between">
