@@ -153,14 +153,25 @@ const loadLessons = () =>{
 
 
 const displayLesson = (lessons) => {
+
+    const cardCount  = document.getElementById("card-count");
+    if(cardCount){
+        cardCount.innerText = lessons.length;
+    }
     
     const levelContainer = document.getElementById("level-container");
     levelContainer.innerHTML = "";
 
+    if (lessons.length === 0) {
+        levelContainer.innerHTML = `<h2 class="text-2xl font-bold text-center w-full col-span-3 py-10">No Issues Found!</h2>`;
+        spinnerController(false);
+        return;
+    }
+    
     lessons.forEach(lesson => {
      
         let dynamicBorder = ""; 
-        let dynamicColor = ""; 
+        let btnColor = ""; 
         
         if (lesson.status === "open") {
             dynamicBorder = "border-green-500";
@@ -169,11 +180,11 @@ const displayLesson = (lessons) => {
         }
         //  Priority onujayi Button Color
         if (lesson.priority === "high") {
-            dynamicColor = "border-red-500 text-red-600 bg-red-100";
+            btnColor = "border-red-500 text-red-600 bg-red-100";
         } else if (lesson.priority === "medium") {
-            dynamicColor = "border-yellow-500 text-yellow-600 bg-yellow-100";
+            btnColor = "border-yellow-500 text-yellow-600 bg-yellow-100";
         } else {
-            dynamicColor = "border-gray-500 text-gra-600 bg-gray-200";
+            btnColor = "border-gray-500 text-gra-600 bg-gray-200";
         }
 
 
@@ -184,7 +195,7 @@ const displayLesson = (lessons) => {
             <div onclick="loadDetail(${lesson.id})" class="bg-white space-y-7 p-5 rounded-xl shadow-lg border-t-[5px] ${dynamicBorder} h-full">
                 <div class="flex justify-between">
                     <img class="w-8 h-8" src="./assets/Open-Status.png" alt="">
-                    <button class="btn rounded-2xl border ${dynamicColor} px-4 py-1">
+                    <button class="btn rounded-2xl border ${btnColor} px-4 py-1">
                         ${lesson.priority}
                     </button>
                 </div>
