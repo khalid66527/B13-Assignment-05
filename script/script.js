@@ -47,10 +47,28 @@ const spinnerController = (status)=>{
     }
 }
 
+const loadDetail= async(id) => {
+    spinnerController(true);
+    const url=`https://phi-lab-server.vercel.app/api/v1/lab/issue/${id}`;
+    const res = await fetch(url);
+    const details = await res .json();
+    displayDetails(details.data)
+}
 
 
 const displayDetails = (word) =>{
     console.log(word);
+    let modalpriorityBtnColor = "";
+    if (word.priority === "high") {
+        modalpriorityBtnColor = "bg-red-600 text-white border-red-700";
+    } else if (word.priority === "medium") {
+        modalpriorityBtnColor = "bg-yellow-500 text-black border-yellow-600";
+    } else {
+        modalpriorityBtnColor = "bg-gray-600 text-white border-gray-700";
+    }
+     
+  
+
     const modalContainer = document.getElementById("modal-container");
     modalContainer.innerHTML  = `
 
@@ -58,7 +76,8 @@ const displayDetails = (word) =>{
                 <div class="">
                     <h2 class="font-bold text-2xl">${word.title}</h2>
                     <div class=" flex gap-2 items-center">
-                        <span class="bg-green-700 p-2 rounded-2xl text-white">${word.status}</span>
+                        <span class="p-2 px-4 rounded-2xl text-white ${word.status === 'open' ? 'bg-green-600' : 'bg-purple-600'}">${word.status}
+                        </span>
                         <span>Opened by </span>
                         <span class="font-bold">#${word.author}</span>
                         <span>${new Date(word.updatedAt).toLocaleDateString()}</span>
@@ -76,7 +95,7 @@ const displayDetails = (word) =>{
                     </div>
                     <div class="">
                         <p class="text-gray-500">Priority:</p>
-                        <button class="btn bg-red-600 text-white rounded-2xl border px-4 py-1">
+                        <button class="btn   rounded-2xl border px-4 py-1 ${modalpriorityBtnColor}">
                         ${word.priority}
                         </button>
                     </div>
@@ -136,13 +155,6 @@ const filterIssues = (status) => {
 }
 
 
-const loadDetail= async(id) => {
-    spinnerController(true);
-    const url=`https://phi-lab-server.vercel.app/api/v1/lab/issue/${id}`;
-    const res = await fetch(url);
-    const details = await res .json();
-    displayDetails(details.data)
-}
 
 const loadLessons = () =>{
     fetch("https://phi-lab-server.vercel.app/api/v1/lab/issues")
@@ -167,16 +179,16 @@ const displayLesson = (lessons) => {
         spinnerController(false);
         return;
     }
-    
+
     lessons.forEach(lesson => {
      
-        let dynamicBorder = ""; 
+        let Border = ""; 
         let btnColor = ""; 
         
         if (lesson.status === "open") {
-            dynamicBorder = "border-green-500";
+            Border = "border-green-500";
         } else {
-            dynamicBorder = "border-purple-500";
+            Border = "border-purple-500";
         }
         //  Priority onujayi Button Color
         if (lesson.priority === "high") {
@@ -192,7 +204,7 @@ const displayLesson = (lessons) => {
         
         //  Ekhane dynamic class gulo bosiye dao
         cardDiv.innerHTML = `
-            <div onclick="loadDetail(${lesson.id})" class="bg-white space-y-7 p-5 rounded-xl shadow-lg border-t-[5px] ${dynamicBorder} h-full">
+            <div onclick="loadDetail(${lesson.id})" class="bg-white space-y-7 p-5 rounded-xl shadow-lg border-t-[5px] ${Border} h-full">
                 <div class="flex justify-between">
                     <img class="w-8 h-8" src="./assets/Open-Status.png" alt="">
                     <button class="btn rounded-2xl border ${btnColor} px-4 py-1">
